@@ -1,78 +1,140 @@
 namespace ImplementacjaListy
 {
-    class List
-    {
-        static List<Node> nodeList = new List<Node>();
-        Node ?head;
-        Node ?rear;
+    public class NodeList
+	{
+        private Node head;
+        private Node tail;
+        private int size;
 
-        public void addNext(Node rear)
-        {
-            nodeList.Add(rear);
-            this.rear = rear;
-            this.head = nodeList[0];
-        }
+        public NodeList()
+		{
+            this.size = 0;
+		}
 
-        public string getName(Node node)
-        {
-            return node.name;
-        }
+        public void insertFirst(int val)
+		{
+            Node node = new Node(val);
+            node.next = head;
+            head = node;
 
-        public int getId(Node node)
-        {
-            return node.id;
-        }
+            if (tail == null)
+			{
+                tail = head;
+			}
 
-        public void getPrevious(Node node)
-        {
-            int index = 0;
+            size += 1;
+		}
 
-            foreach (Node item in nodeList)
-            {
-                if (item == node)
-                {
-                    index = nodeList.IndexOf(item) - 1;
+        public void insertLast(int val)
+		{
+            if (tail == null)
+			{
+                insertFirst(val);
+                return;
+			}
 
-                    if (index == -1)
-                        System.Console.WriteLine("Węzeł jest pierwszy w liście");
-                    else
-                        System.Console.WriteLine(nodeList[index].name);
-                }
-            }
-        }
+            Node node = new Node(val);
+            tail.next = node;
+            tail = node;
+            size++;
+		}
 
-        public void remove(Node node)
-        {
-            nodeList.Remove(node);
-        }
+        public void insert(int val, int index)
+		{
+            if (index == 0)
+			{
+                insertFirst(val);
+                return;
+			}
 
-        public int count()
-        {
-            return nodeList.Count();
-        }
+            if (index == size)
+			{
+                insertLast(val);
+                return;
+			}
+
+            Node temp = head;
+
+			for (int i = 0; i < index; i++)
+			{
+                temp = temp.next;
+			}
+
+            Node node = new Node(val, temp.next);
+            temp.next = node;
+            size++;
+		}
+
+        public int deleteFirst()
+		{
+            int val = head.value;
+            head = head.next;
+
+            if (head == null)
+			{
+                tail = null;
+			}
+
+            size--;
+            return val;
+		}
+
+        public int deleteLast()
+		{
+            if (size <= 1)
+			{
+                return deleteFirst();
+			}
+
+            Node secondLast = get(size - 2);
+            int val = tail.value;
+            tail = secondLast;
+            tail.next = null;
+            return val;
+		}
+
+        public int delete(int index)
+		{
+            if (index == 0)
+			{
+                return deleteFirst();
+			}
+
+            if (index == size - 1)
+			{
+                return deleteLast();
+			}
+
+            Node prev = get(index - 1);
+            int val = prev.next.value;
+            prev.next = prev.next.next;
+
+            return val;
+		}
+
+        public Node get(int index)
+		{
+            Node node = head;
+
+			for (int i = 0; i < index; i++)
+			{
+                node = node.next;
+			}
+
+            return node;
+		}
 
         public void display()
-        {
-            foreach(Node node in nodeList)
-            {
-                System.Console.WriteLine(node.name);
-            }
-        }
+		{
+            Node temp = head;
 
-        public string? toEnd()
-        {
-            if (rear == null) 
-                return null;
+            while (temp != null)
+			{
+				Console.Write(temp.value + " -> ");
+                temp = temp.next;
+			}
 
-            return rear.name;
-        }
-
-        public string? toBeggining()
-        {
-            if (head == null) 
-                return null;
-
-            return head.name;
-        }
-    }
+			Console.WriteLine("End");
+		}
+	}
 }
