@@ -1,30 +1,23 @@
-﻿namespace ImplementacjaListy
+namespace ImplementacjaListy
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            List list = new List();
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			NodeList list = new NodeList();
+			list.insertFirst(3);
+			list.insertFirst(5);
+			list.insertLast(7);
+			list.insertLast(9);
+			list.insert(6, 1);
 
-            Node item1 = new("i1");
-            Node item2 = new("i2");
-            Node item3 = new("i3");
-            Node item4 = new("i4");
-            Node item5 = new("i5");
-
-            list.addNext(item1);
-            list.addNext(item2);
-            list.addNext(item3);
-            list.addNext(item4);
-            list.addNext(item5);
-            
-            list.getPrevious(item2);
-            list.getPrevious(item1);
-            list.remove(item3);
-            list.display();
-
-            System.Console.WriteLine(list.toBeggining());
-            System.Console.WriteLine(list.toEnd());
-        }
-    }
+			list.display();
+			list.deleteFirst();
+			list.display();
+			list.deleteLast();
+			list.display();
+			list.delete(1);
+			list.display();
+		}
+	}
 }
