@@ -1,18 +1,19 @@
 namespace ImplementacjaListy
 {
-    class Node
+    public class Node
     {
-        static int total = 0;
-        public int id;
-        public string name;
-        public Node ?next;
+        public int value;
+        public Node next;
 
-        public Node(string name)
-        {
-            ++total;
-            this.name = name;
-            this.id = total;
-        }
+        public Node(int value)
+		{
+            this.value = value;
+		}
+
+        public Node(int value, Node next)
+		{
+            this.value = value;
+            this.next = next;
+		}
     }
-        
 }
